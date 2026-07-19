@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Override;
 
 #[Fillable(['quantity'])]
 class CartItem extends Model
 {
+    use HasFactory;
+
     #[Override]
     protected function casts()
     {
