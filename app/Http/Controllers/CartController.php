@@ -128,11 +128,11 @@ class CartController extends Controller
     // /**
     //  * Remove the specified resource from storage.
     //  */
-    public function destroy(CartItem $cartItem)
+    public function destroy(CartItem $cart)
     {
-        abort_if($cartItem->user_id !== Auth::id(), 403);
+        abort_if($cart->user_id !== Auth::id(), 403);
 
-        $cartItem->delete();
+        $cart->delete();
         return back();
     }
 }
