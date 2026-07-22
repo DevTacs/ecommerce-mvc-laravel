@@ -2,33 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
         $cartItems = Auth::user()
             ->cartItems()
             ->with('product')
             ->paginate(10);
 
-        return view('cart.index', compact('cartItems'));
+        $cartTotal = Auth::user()
+            ->cartItems()
+            ->with('product')
+            ->get()
+            ->sum(function($item) {
+                return $item->product->price * $item->quantity;
+            });
+
+
+        return view('cart.index', compact('cartItems', 'cartTotal'));
     }
 
     public function increment(CartItem $cartItem)
     {
         $cartItem->increment('quantity');
         
+        $cartTotal = Auth::user()
+            ->cartItems()
+            ->with('product')
+            ->get()
+            ->sum(function($item) {
+                return $item->product->price * $item->quantity;
+            });
+            
+        $cartCount = Auth::user()
+            ->cartItems()
+            ->sum('quantity');
+            
         return response()->json([
-            'quantity' => $cartItem->quantity
+            'quantity' => $cartItem->quantity,
+            'cartTotal' => $cartTotal,
+            'cartCount' => $cartCount
         ]);
     }
 
@@ -37,28 +56,50 @@ class CartController extends Controller
     {
         if($cartItem->quantity > 1) {
             $cartItem->decrement('quantity');
+            
+            $cartTotal = Auth::user()
+                ->cartItems()
+                ->with('product')
+                ->get()
+                ->sum(function($item) {
+                    return $item->product->price * $item->quantity;
+            });       
         }
-
+        $cartCount = Auth::user()
+            ->cartItems()
+            ->sum('quantity');
+                
         return response()->json([
-            'quantity' => $cartItem->quantity
+            'quantity' => $cartItem->quantity,
+            'cartTotal' => $cartTotal,
+            'cartCount' => $cartCount
         ]);
     }
+    
+    public function store(Request $request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        
+        $cartItem = Auth::user()
+            ->cartItems()
+            ->where('product_id', $product->id)
+            ->first();
+        
+        if($cartItem) {
+            $cartItem->increment('quantity');
+        }else {
+            Auth::user()->cartItems()->create([
+                'product_id' => $product->id,
+                'quantity' => 1
+            ]);
+        }
+        $cartCount = Auth::user()->cartItems()->sum('quantity');
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Store a newly created resource in storage.
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
+        return response()->json([
+            'message' => 'Added to cart',
+            'cartCount' => $cartCount
+        ]);
+    }
 
     // /**
     //  * Display the specified resource.
@@ -87,8 +128,11 @@ class CartController extends Controller
     // /**
     //  * Remove the specified resource from storage.
     //  */
-    // public function destroy(Cart $cart)
-    // {
-    //     //
-    // }
+    public function destroy(CartItem $cartItem)
+    {
+        abort_if($cartItem->user_id !== Auth::id(), 403);
+
+        $cartItem->delete();
+        return back();
+    }
 }

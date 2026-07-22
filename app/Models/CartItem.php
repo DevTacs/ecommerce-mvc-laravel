@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Override;
 
-#[Fillable(['quantity'])]
+#[Fillable([
+    'product_id',
+    'quantity'
+])]
 class CartItem extends Model
 {
     use HasFactory;

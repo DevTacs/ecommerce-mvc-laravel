@@ -29,9 +29,29 @@
         </div>
 
         <button
+            onclick="addToCart({{$product->id}})"
+            id="btn-cart"
             class="w-full rounded-lg bg-amber-700 py-2.5 font-medium text-white transition hover:bg-amber-800">
             Add to Cart
         </button>
 
     </div>
 </div>
+<script>
+async function addToCart(product_id) {
+    const response = await fetch(`/cart`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            product_id: product_id
+        })
+    })
+    const data = await response.json()
+
+    document.getElementById('cartCount').textContent = data.cartCount
+}    
+</script>

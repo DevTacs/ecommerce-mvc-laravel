@@ -30,7 +30,7 @@
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Cart
                 @if($cartCount > 0)
-                    <span class="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-xs font-semibold text-white">
+                    <span id='cartCount' class="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-xs font-semibold text-white">
                         {{ $cartCount }}
                     </span>
                 @endif
