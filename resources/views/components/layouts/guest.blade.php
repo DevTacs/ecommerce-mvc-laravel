@@ -14,21 +14,6 @@
             <h1 class="text-2xl font-bold text-amber-700">
                 Ecommerce
             </h1>
-
-            <nav class="flex items-center gap-6 text-sm">
-                <a href="/" class="hover:text-amber-700 transition">
-                    Home
-                </a>
-
-                <a href="{{ route('login') }}" class="hover:text-amber-700 transition">
-                    Login
-                </a>
-
-                <a href="{{ route('register') }}"
-                    class="rounded-lg bg-amber-700 px-4 py-2 text-white hover:bg-amber-800 transition">
-                    Register
-                </a>
-            </nav>
         </div>
     </header>
 
