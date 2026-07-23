@@ -29,11 +29,9 @@
                 ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Cart
-                @if($cartCount > 0)
-                    <span id='cartCount' class="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-xs font-semibold text-white">
-                        {{ $cartCount }}
-                    </span>
-                @endif
+            <span id="cartCount" class="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-xs font-semibold text-white {{ $cartCount > 0 ? '' : 'hidden' }}">
+                {{ $cartCount }}
+            </span>
         </a>
 
 

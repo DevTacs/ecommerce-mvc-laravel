@@ -51,7 +51,13 @@ async function addToCart(product_id) {
         })
     })
     const data = await response.json()
+    const badge = document.getElementById('cartCount');
+    badge.textContent = data.cartCount;
 
-    document.getElementById('cartCount').textContent = data.cartCount
+    if (data.cartCount > 0) {
+        badge.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+    }
 }    
 </script>
