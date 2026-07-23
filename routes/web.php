@@ -14,7 +14,7 @@ Route::middleware('guest')->controller(AuthController::class)
     Route::post('/register','register');
 });
 
-Route::middleware('auth')->group(function() {
+Route::middleware(['auth', 'customer'])->group(function() {
     Route::resource('products', ProductController::class);
     Route::resource('cart', CartController::class);
     Route::prefix('cart')->controller(CartController::class)
