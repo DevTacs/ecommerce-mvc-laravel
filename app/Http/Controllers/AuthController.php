@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,9 @@ class AuthController extends Controller
         if(Auth::attempt($credentials, $request->boolean('remember')))
         {
             $request->session()->regenerate();
+            if(Auth::user()->role === UserRole::ADMIN) {
+                return redirect()->route('dashboard.index');
+            }
             return redirect()->route('products.index');
         }
         
