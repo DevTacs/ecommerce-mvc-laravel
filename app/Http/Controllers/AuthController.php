@@ -29,7 +29,7 @@ class AuthController extends Controller
         if(Auth::attempt($credentials, $request->boolean('remember')))
         {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->route('products.index');
         }
         
         return back()->withErrors([
@@ -61,8 +61,12 @@ class AuthController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function logout() 
+    public function logout(Request $request) 
     {
+        Auth::guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
+        return redirect('/login');
     }
 }
