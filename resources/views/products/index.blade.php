@@ -33,25 +33,20 @@
         </form>
     </div>
         
-        @if($products->count() > 0) 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            @foreach ($products as $product)
-                <x-products.product-card :product='$product'/>
-            @endforeach  
-            @if($products->count() > 0)
-                <div class="w-full mt-8">
-                    {{ $products->links() }}
-                </div>
-            @endif
-        </div>
-               
-        @else 
+        @forelse ($products as $product)
+            <x-products.product-card :product='$product'/>
+        
+        @empty 
             <div class="p-10 text-center">
                 <p class="text-gray-500">
                 Products is empty.
                 </p>
             </div>
-        @endif
-        
+        @endforelse  
+        </div>
+        <div class="w-full mt-8">
+            {{ $products->links() }}
+        </div>
     </div>
 </x-layouts.app>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -11,8 +14,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
-        return view('orders.index');
+        $orders = Auth::user()
+            ->orders()
+            ->paginate();
+            
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -28,15 +34,19 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
+        abort_unless(Auth::user()->id === $order->user_id, 403);
+        
+        $orderItems = $order->orderItems()->get();
+
+        return view('orders.show', compact('order', 'orderItems'));
     }
 
     /**

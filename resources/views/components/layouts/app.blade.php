@@ -25,7 +25,7 @@
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Products
         </a>
-            <a href="{{ route('cart.index') }}" class="relative text-sm font-medium transition {{ request()->routeIs('carts.*')
+            <a href="{{ route('cart.index') }}" class="relative text-sm font-medium transition {{ request()->routeIs('cart.*')
                 ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Cart
