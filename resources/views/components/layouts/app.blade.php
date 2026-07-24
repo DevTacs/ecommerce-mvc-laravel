@@ -34,6 +34,12 @@
             </span>
         </a>
 
+        <a href="{{route('orders.index')}}" class="text-sm font-medium transition {{ request()->routeIs('orders.*')
+                ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
+                : 'text-gray-700 hover:text-amber-700' }}">
+                Orders
+        </a>
+
 
         <div class="flex items-center justify-between gap-4 border-t pt-4 md:border-l md:border-t-0 md:pl-6 md:pt-0">
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::middleware(['auth', 'customer'])->group(function() {
         Route::post('/{cartItem}/increment', 'increment')->name('increment');
         Route::post('/{cartItem}/decrement', 'decrement')->name('decrement');
     });
+    Route::resource('orders', OrderController::class);
         
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
