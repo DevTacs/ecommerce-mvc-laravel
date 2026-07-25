@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Override;
 
-#[Fillable(['product_name', 'product_price', 'quantity'])]
+#[Fillable(['product_name', 'product_price', 'quantity', 'image_url'])]
 class OrderItem extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderItemFactory> */

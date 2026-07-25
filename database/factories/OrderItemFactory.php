@@ -26,6 +26,7 @@ class OrderItemFactory extends Factory
             'product_name' => $product->name,
             'product_price' => $product->price,
             'quantity' => fake()->numberBetween(1, 20),
+            'image_url' => $product->image_url,
         ];
     }
 }
