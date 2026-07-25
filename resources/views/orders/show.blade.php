@@ -55,144 +55,153 @@
 
     </div>
 
-     <div class="rounded-xl border border-gray-200 bg-white shadow-sm">
-
-    <div class="border-b border-gray-200 px-6 py-4">
-        <h2 class="text-lg font-semibold text-gray-900">
-            Order Items
-        </h2>
-    </div>
+    <div class="rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div class="border-b border-gray-200 px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-900">
+                Order Items
+            </h2>
+        </div>
 
     {{-- Desktop Table --}}
-    <div class="hidden md:block overflow-x-auto">
+        <div class="hidden md:block overflow-x-auto">
 
-        <table class="min-w-full divide-y divide-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
 
-            <thead class="bg-amber-700 text-white">
-                <tr>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
-                        Image   
-                    </th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
-                        Product
-                    </th>
-
-                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase">
-                        Price
-                    </th>
-
-                    <th class="px-6 py-4 text-center text-xs font-semibold uppercase">
-                        Quantity
-                    </th>
-
-                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase">
-                        Subtotal
-                    </th>
-                </tr>
-            </thead>
-
-            <tbody class="divide-y divide-gray-100">
-
-                @forelse ($orderItems as $item)
-
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 flex flex-row">
-                            <p class="px-4 w-10">{{$loop->iteration}}.</p>
-                            <img class="w-15 ml-4" src="{{$item->image_url}}" alt="">
-                        </td>
-                        
-                        <td class="px-6 py-4 font-medium">
-                            {{ $item->product_name }}
-                        </td>
-
-                        <td class="px-6 py-4 text-right">
-                            ₱{{ number_format($item->product_price, 2) }}
-                        </td>
-
-                        <td class="px-6 py-4 text-center">
-                            {{ $item->quantity }}
-                        </td>
-
-                        <td class="px-6 py-4 text-right font-semibold">
-                            ₱{{ number_format($item->product_price * $item->quantity, 2) }}
-                        </td>
-
-                    </tr>
-
-                @empty
-
+                <thead class="bg-amber-700 text-white">
                     <tr>
-                        <td colspan="4" class="px-6 py-12 text-center text-gray-500">
-                            No items found for this order.
-                        </td>
+                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
+                            Image   
+                        </th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
+                            Product
+                        </th>
+
+                        <th class="px-6 py-4 text-right text-xs font-semibold uppercase">
+                            Price
+                        </th>
+
+                        <th class="px-6 py-4 text-center text-xs font-semibold uppercase">
+                            Quantity
+                        </th>
+
+                        <th class="px-6 py-4 text-right text-xs font-semibold uppercase">
+                            Subtotal
+                        </th>
                     </tr>
+                </thead>
 
-                @endforelse
+                <tbody class="divide-y divide-gray-100">
 
-            </tbody>
+                    @forelse ($orderItems as $item)
 
-        </table>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 flex flex-row">
+                                <p class="px-4 w-10">{{$loop->iteration}}.</p>
+                                <img class="w-15 ml-4" src="{{$item->image_url}}" alt="{{$item->product_name}}" loading="lazy">
+                            </td>
+                            
+                            <td class="px-6 py-4 font-medium">
+                                {{ $item->product_name }}
+                            </td>
 
-    </div>
+                            <td class="px-6 py-4 text-right">
+                                ₱{{ number_format($item->product_price, 2) }}
+                            </td>
 
+                            <td class="px-6 py-4 text-center">
+                                {{ $item->quantity }}
+                            </td>
+
+                            <td class="px-6 py-4 text-right font-semibold">
+                                ₱{{ number_format($item->product_price * $item->quantity, 2) }}
+                            </td>
+
+                        </tr>
+
+                    @empty
+
+                        <tr>
+                            <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                                No items found for this order.
+                            </td>
+                        </tr>
+
+                    @endforelse
+
+                </tbody>
+            </table>
+        </div>
+
+      
     {{-- Mobile Cards --}}
     <div class="space-y-4 p-4 md:hidden">
 
-        @forelse ($orderItems as $item)
+    @forelse ($orderItems as $item)
 
-            <div class="rounded-lg border border-gray-200 p-4">
+        <div class="rounded-lg border border-gray-200 p-4">
 
-                <h3 class="font-semibold text-gray-900">
-                    {{ $item->product_name }}
-                </h3>
+            <div class="flex gap-4">
+                <img
+                    src="{{$item->image_url}}"
+                    alt="{{ $item->product_name }}"
+                    class="h-20 w-20 rounded-lg object-cover border"
+                >
 
-                <div class="mt-3 space-y-2 text-sm">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-900">
+                        {{ $item->product_name }}
+                    </h3>
 
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">
-                            Price
-                        </span>
+                    <div class="mt-3 space-y-2 text-sm">
 
-                        <span>
-                            ₱{{ number_format($item->product_price, 2) }}
-                        </span>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">
+                                Price
+                            </span>
+
+                            <span>
+                                ₱{{ number_format($item->product_price, 2) }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">
+                                Quantity
+                            </span>
+
+                            <span>
+                                {{ $item->quantity }}
+                            </span>
+                        </div>
+
+                        <div class="flex justify-between border-t pt-2 font-semibold">
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <span>
+                                ₱{{ number_format($item->product_price * $item->quantity, 2) }}
+                            </span>
+                        </div>
+
                     </div>
-
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">
-                            Quantity
-                        </span>
-
-                        <span>
-                            {{ $item->quantity }}
-                        </span>
-                    </div>
-
-                    <div class="flex justify-between border-t pt-2 font-semibold">
-                        <span>
-                            Subtotal
-                        </span>
-
-                        <span>
-                            ₱{{ number_format($item->product_price * $item->quantity, 2) }}
-                        </span>
-                    </div>
-
                 </div>
-
             </div>
 
-        @empty
+        </div>
 
-            <div class="py-12 text-center text-gray-500">
-                No items found for this order.
-            </div>
+    @empty
 
-        @endforelse
+        <div class="py-12 text-center text-gray-500">
+            No items found for this order.
+        </div>
 
-    </div>
+    @endforelse
 
 </div>
-
+    </div>
+          <div class="w-full mb-8">
+            {{$orderItems->links()}}
+        </div>
     </div>
 </x-layouts.app>

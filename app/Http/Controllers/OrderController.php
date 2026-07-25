@@ -44,7 +44,7 @@ class OrderController extends Controller
     {
         abort_unless(Auth::user()->id === $order->user_id, 403);
         
-        $orderItems = $order->orderItems()->get();
+        $orderItems = $order->orderItems()->paginate(10);
 
         return view('orders.show', compact('order', 'orderItems'));
     }
