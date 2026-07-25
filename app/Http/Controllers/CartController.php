@@ -25,7 +25,7 @@ class CartController extends Controller
             });
 
 
-        return view('cart.index', compact('cartItems', 'cartTotal'));
+        return view('pages.cart.index', compact('cartItems', 'cartTotal'));
     }
 
     public function increment(CartItem $cartItem)
