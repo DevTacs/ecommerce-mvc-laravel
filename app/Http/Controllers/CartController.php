@@ -84,6 +84,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::findOrFail($request->product_id);
+        if($product->stock <= 0 ) return;
         
         $cartItem = Auth::user()
             ->cartItems()

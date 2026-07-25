@@ -17,8 +17,8 @@
                 Stock: {{ $product->stock }}
             </span>
 
-            <span class="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
-                Available
+            <span class="rounded-full px-2 py-1 text-xs font-medium {{$product->stock > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}}">
+                {{$product->stock > 0 ? 'Available' : 'Out of Stock'}}
             </span>
         </div>
 
@@ -28,13 +28,18 @@
             </span>
         </div>
 
-        <button
-            onclick="addToCart({{$product->id}})"
+        <button @disabled($product->stock <= 0)
+            onclick="addToCart({{ $product->id }})"
             id="btn-cart"
-            class="w-full rounded-lg bg-amber-700 py-2.5 font-medium text-white transition hover:bg-amber-800">
-            Add to Cart
+            class="w-full rounded-lg bg-amber-700 py-2.5 font-medium text-white transition
+           hover:bg-amber-800
+           disabled:bg-gray-400
+           disabled:text-gray-200
+           disabled:cursor-not-allowed
+           disabled:hover:bg-gray-400
+           disabled:opacity-60">
+    Add to Cart
         </button>
-
     </div>
 </div>
 <script>
