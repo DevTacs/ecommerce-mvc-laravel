@@ -13,9 +13,7 @@
 
         {{-- Desktop Table --}}
         <div class="hidden overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm md:block">
-
             <table class="min-w-full divide-y divide-gray-200">
-
                 <thead class="bg-amber-700 text-white">
                     <tr>
                         <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
@@ -47,7 +45,7 @@
                         @php
                             $statusClasses = match (ucfirst($order->status)) {
                                 'Pending' => 'bg-yellow-100 text-yellow-800',
-                                'Success' => 'bg-green-100 text-green-800',
+                                'Completed' => 'bg-green-100 text-green-800',
                                 'Failed' => 'bg-red-100 text-red-800',
                                 default => 'bg-gray-100 text-gray-700',
                             };
@@ -112,13 +110,12 @@
 
                             </td>
                         </tr>
-
                     @endforelse
-
                 </tbody>
-
             </table>
-
+        </div>
+        <div class="w-full mt-8">
+            {{ $orders->links() }}
         </div>
 
         {{-- Mobile Cards --}}
@@ -210,7 +207,9 @@
                 </div>
 
             @endforelse
-
+            <div class="w-full mt-8">
+                {{ $orders->links() }}
+            </div>
         </div>
 
     </div>

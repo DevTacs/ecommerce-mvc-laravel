@@ -11,7 +11,7 @@
     @php
         $statusClasses = match (ucfirst($order->status)) {
             'Pending' => 'bg-yellow-100 text-yellow-800',
-            'Success' => 'bg-green-100 text-green-800',
+            'Completed  ' => 'bg-green-100 text-green-800',
             'Failed' => 'bg-red-100 text-red-800',
             default => 'bg-gray-100 text-gray-700',
         };
@@ -71,6 +71,9 @@
             <thead class="bg-amber-700 text-white">
                 <tr>
                     <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
+                        Image   
+                    </th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase">
                         Product
                     </th>
 
@@ -93,7 +96,11 @@
                 @forelse ($orderItems as $item)
 
                     <tr class="hover:bg-gray-50">
-
+                        <td class="px-6 py-4 flex flex-row">
+                            <p class="px-4 w-10">{{$loop->iteration}}.</p>
+                            <img class="w-15 ml-4" src="{{$item->image_url}}" alt="">
+                        </td>
+                        
                         <td class="px-6 py-4 font-medium">
                             {{ $item->product_name }}
                         </td>
