@@ -30,6 +30,8 @@ class CartController extends Controller
 
     public function increment(CartItem $cartItem)
     {
+        if($cartItem->quantity >= $cartItem->product->stock) return;
+        
         $cartItem->increment('quantity');
         
         $cartTotal = Auth::user()
@@ -55,17 +57,18 @@ class CartController extends Controller
 
     public function decrement(CartItem $cartItem) 
     {
-        if($cartItem->quantity > 1) {
-            $cartItem->decrement('quantity');
-            
-            $cartTotal = Auth::user()
-                ->cartItems()
-                ->with('product')
-                ->get()
-                ->sum(function($item) {
-                    return $item->product->price * $item->quantity;
-            });       
-        }
+        if($cartItem->quantity <= 0) return; 
+        
+        $cartItem->decrement('quantity');
+        
+        $cartTotal = Auth::user()
+            ->cartItems()
+            ->with('product')
+            ->get()
+            ->sum(function($item) {
+                return $item->product->price * $item->quantity;
+        });       
+        
         $cartCount = Auth::user()
             ->cartItems()
             ->sum('quantity');
