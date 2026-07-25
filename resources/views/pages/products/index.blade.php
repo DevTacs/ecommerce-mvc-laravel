@@ -35,7 +35,7 @@
         
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         @forelse ($products as $product)
-            <x-products.product-card :product='$product'/>
+            <x-products.product_card :product='$product'/>
         
         @empty 
             <div class="p-10 text-center">

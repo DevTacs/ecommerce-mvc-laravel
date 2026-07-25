@@ -191,10 +191,9 @@
         </div>
 
     @empty
-
-        <div class="py-12 text-center text-gray-500">
-            No items found for this order.
-        </div>
+    <div class="py-12 text-center text-gray-500">
+        No items found for this order.
+    </div>
 
     @endforelse
 
