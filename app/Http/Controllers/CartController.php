@@ -46,6 +46,7 @@ class CartController extends Controller
             
         return response()->json([
             'quantity' => $cartItem->quantity,
+            'subTotal' => $cartItem->product->price * $cartItem->quantity,
             'cartTotal' => $cartTotal,
             'cartCount' => $cartCount
         ]);
@@ -71,6 +72,7 @@ class CartController extends Controller
                 
         return response()->json([
             'quantity' => $cartItem->quantity,
+            'subTotal' => $cartItem->product->price * $cartItem->quantity,
             'cartTotal' => $cartTotal,
             'cartCount' => $cartCount
         ]);
