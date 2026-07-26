@@ -31,7 +31,7 @@
                     Unit Price: ₱{{ number_format($item->product->price, 2) }}
                 </p>
 
-                <p class="mt-2 text-lg font-bold text-amber-700">
+                <p id="subTotal-{{$item->id}}" class="mt-2 text-lg font-bold text-amber-700">
                     ₱{{ number_format($item->product->price * $item->quantity, 2) }}
                 </p>
 
@@ -100,7 +100,7 @@ async function increment(itemId) {
 
     const data = await response.json();
     document.getElementById(`quantity-${itemId}`).textContent = data.quantity
-    document.getElementById('cartTotal').textContent = data.cartTotal
+    document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
     document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
     document.getElementById('cartCount').textContent = data.cartCount
 
@@ -117,6 +117,7 @@ async function decrement(itemId) {
 
     const data = await response.json()
     document.getElementById(`quantity-${itemId}`).textContent = data.quantity
+    document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
     document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
     document.getElementById('cartCount').textContent = data.cartCount
 }

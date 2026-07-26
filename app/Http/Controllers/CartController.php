@@ -25,11 +25,13 @@ class CartController extends Controller
             });
 
 
-        return view('cart.index', compact('cartItems', 'cartTotal'));
+        return view('pages.cart.index', compact('cartItems', 'cartTotal'));
     }
 
     public function increment(CartItem $cartItem)
     {
+        if($cartItem->quantity >= $cartItem->product->stock) return;
+        
         $cartItem->increment('quantity');
         
         $cartTotal = Auth::user()
@@ -46,6 +48,7 @@ class CartController extends Controller
             
         return response()->json([
             'quantity' => $cartItem->quantity,
+            'subTotal' => $cartItem->product->price * $cartItem->quantity,
             'cartTotal' => $cartTotal,
             'cartCount' => $cartCount
         ]);
@@ -54,23 +57,25 @@ class CartController extends Controller
 
     public function decrement(CartItem $cartItem) 
     {
-        if($cartItem->quantity > 1) {
-            $cartItem->decrement('quantity');
-            
-            $cartTotal = Auth::user()
-                ->cartItems()
-                ->with('product')
-                ->get()
-                ->sum(function($item) {
-                    return $item->product->price * $item->quantity;
-            });       
-        }
+        if($cartItem->quantity <= 0) return; 
+        
+        $cartItem->decrement('quantity');
+        
+        $cartTotal = Auth::user()
+            ->cartItems()
+            ->with('product')
+            ->get()
+            ->sum(function($item) {
+                return $item->product->price * $item->quantity;
+        });       
+        
         $cartCount = Auth::user()
             ->cartItems()
             ->sum('quantity');
                 
         return response()->json([
             'quantity' => $cartItem->quantity,
+            'subTotal' => $cartItem->product->price * $cartItem->quantity,
             'cartTotal' => $cartTotal,
             'cartCount' => $cartCount
         ]);
@@ -79,6 +84,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::findOrFail($request->product_id);
+        if($product->stock <= 0 ) return;
         
         $cartItem = Auth::user()
             ->cartItems()

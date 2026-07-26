@@ -35,8 +35,13 @@ class User extends Authenticatable
         ];
     }
 
-    function cartItems(): HasMany
+    public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    public function orders():HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

@@ -25,13 +25,19 @@
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Products
         </a>
-            <a href="{{ route('cart.index') }}" class="relative text-sm font-medium transition {{ request()->routeIs('carts.*')
+            <a href="{{ route('cart.index') }}" class="relative text-sm font-medium transition {{ request()->routeIs('cart.*')
                 ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Cart
             <span id="cartCount" class="absolute -right-3 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-amber-700 text-xs font-semibold text-white {{ $cartCount > 0 ? '' : 'hidden' }}">
                 {{ $cartCount }}
             </span>
+        </a>
+
+        <a href="{{route('orders.index')}}" class="text-sm font-medium transition {{ request()->routeIs('orders.*')
+                ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
+                : 'text-gray-700 hover:text-amber-700' }}">
+                Orders
         </a>
 
 
