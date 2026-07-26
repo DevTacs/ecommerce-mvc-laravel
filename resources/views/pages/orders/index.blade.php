@@ -4,7 +4,6 @@
             <h1 class="text-3xl font-bold text-gray-900">
                 My Orders
             </h1>
-
             <p class="mt-2 text-gray-600">
                 View your previous purchases and track their current status.
             </p>
