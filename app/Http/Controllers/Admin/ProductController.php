@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.products.admin.create');
     }
 
     /**
@@ -37,7 +37,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'image_url' => ['required', 'image', 'mimes: jpg,jpeg,png,webp', 'max: 2048'],
+            'name' => ['required', 'string', 'max: 255'],
+            'stock' => ['required', 'integer', 'min: 0'],
+            'price' => ['required', 'numeric', 'min: 0']
+        ]);
+
+        $path = $request->file('image_url')->store('products', 'public');
+
+        $product = Product::create([
+            'image_url' => $path,
+            'name' => $validated['name'],
+            'stock' => $validated['stock'],
+            'price' => $validated['price']
+        ]);
+
+        return redirect()->route('admin.products.index')
+            ->with(['success' => 'Product created successfully']);
     }
 
     /**

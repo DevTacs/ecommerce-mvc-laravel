@@ -3,7 +3,7 @@
         <tr class="transition hover:bg-amber-50">
             <td class="px-6 py-4">
                 <img
-                    src="{{ $product->image_url }}"
+                    src="{{ asset($product->image_url) }}"
                     alt="{{ $product->name }}"
                     class="h-16 w-16 rounded-lg border object-cover">
             </td>

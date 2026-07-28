@@ -3,7 +3,7 @@
         <div class="rounded-lg border border-gray-200 p-4">
             <div class="flex gap-4">
                 <img
-                    src="{{$item->image_url}}"
+                    src="{{asset($item->image_url)}}"
                     alt="{{ $item->product_name }}"
                     class="h-20 w-20 rounded-lg object-cover border"
                 >

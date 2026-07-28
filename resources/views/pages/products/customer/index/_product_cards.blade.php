@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         @foreach ($products as $product)
             <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-56 w-full object-cover" loading='lazy'>
+                <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="h-56 w-full object-cover" loading='lazy'>
 
                 <div class="p-4">
                     <h2 class="mb-2 line-clamp-2 text-lg font-semibold text-gray-900">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="px-4 mb-4">
                     <span class="text-2xl font-bold text-amber-700">
                         ₱{{ number_format($product->price, 2) }}
                     </span>
