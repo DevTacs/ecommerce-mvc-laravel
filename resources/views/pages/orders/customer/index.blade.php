@@ -9,9 +9,9 @@
             </p>
         </div>
             {{-- Desktop Table --}}
-            @include('pages.orders.index._desktop_table')
+            @include('pages.orders.customer.index._desktop_table')
             {{-- Mobile Cards --}}
-            @include('pages.orders.index._mobile_table')
+            @include('pages.orders.customer.index._mobile_table')
         <div class="w-full mt-8">
             {{ $orders->links() }}
         </div>

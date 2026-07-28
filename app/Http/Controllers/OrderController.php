@@ -18,7 +18,7 @@ class OrderController extends Controller
             ->orders()
             ->paginate(10);
             
-        return view('pages.orders.index', compact('orders'));
+        return view('pages.orders.customer.index', compact('orders'));
     }
 
     /**
@@ -46,7 +46,7 @@ class OrderController extends Controller
         
         $orderItems = $order->orderItems()->paginate(10);
 
-        return view('pages.orders.show', compact('order', 'orderItems'));
+        return view('pages.orders.customer.show', compact('order', 'orderItems'));
     }
 
     /**

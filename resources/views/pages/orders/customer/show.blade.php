@@ -7,7 +7,7 @@
             ← Back to Orders
         </a>
     </div>
-    @include('pages.orders.show._order_panel')
+    @include('pages.orders.customer.show._order_panel')
 
     <div class="rounded-xl border border-gray-200 bg-white shadow-sm">
         <div class="border-b border-gray-200 px-6 py-4">
@@ -16,10 +16,10 @@
             </h2>
         </div>
         {{-- Desktop Table --}}
-        @include('pages.orders.show._desktop_table')
+        @include('pages.orders.customer.show._desktop_table')
         
         {{-- Mobile Cards --}}
-        @include('pages.orders.show._mobile_table')
+        @include('pages.orders.customer.show._mobile_table')
     </div>
 </div>
 </x-layouts.app>

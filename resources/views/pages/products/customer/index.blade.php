@@ -32,7 +32,7 @@
             </form>
         </div>
         
-        @include('pages.products.index._product_cards')
+        @include('pages.products.customer.index._product_cards')
         <div class="w-full mt-8">
             {{ $products->links() }}
         </div>
