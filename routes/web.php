@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\ProductController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,7 +18,7 @@ Route::middleware('guest')->controller(AuthController::class)
 });
 
 Route::middleware(['auth', 'customer'])->group(function() {
-    Route::resource('products', ProductController::class);
+    Route::get('/products',[ProductController::class, 'index'])->name('products.index');
     Route::resource('cart', CartController::class);
     Route::prefix('cart')->controller(CartController::class)
     ->name('cart.')
@@ -28,4 +29,10 @@ Route::middleware(['auth', 'customer'])->group(function() {
     Route::resource('orders', OrderController::class);
         
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')
+    ->name('admin.')
+    ->group(function() {
+    Route::resource('products', AdminProductController::class);
 });

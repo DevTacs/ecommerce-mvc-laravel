@@ -40,6 +40,6 @@
         </tr>
 
     @empty
-    @include('pages.orders.index._empty_state')
+    @include('pages.orders.customer.index._empty_state')
     @endforelse
 </tbody>

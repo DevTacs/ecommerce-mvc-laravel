@@ -23,6 +23,6 @@
             </td>
         </tr>
     @empty
-    @include('pages.orders.show._empty_state')
+    @include('pages.orders.customer.show._empty_state')
     @endforelse
 </tbody>

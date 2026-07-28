@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CartController extends Controller
             });
 
 
-        return view('pages.cart.index', compact('cartItems', 'cartTotal'));
+        return view('pages.cart.customer.index', compact('cartItems', 'cartTotal'));
     }
 
     public function increment(CartItem $cartItem)
