@@ -42,7 +42,7 @@
         @endforeach
     </div>
 @else 
-    @include('pages.products.index._empty_state')
+    @include('pages.products.customer.index._empty_state')
 @endif
 
 <script>
