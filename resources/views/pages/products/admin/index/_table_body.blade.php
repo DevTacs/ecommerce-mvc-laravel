@@ -37,12 +37,7 @@
                         class="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
                         Edit
                     </a>     
-                    <button
-                        type="submit"
-                        onclick="return confirm('Delete this product?')"
-                        class="rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-700">
-                        Delete
-                    </button>
+                    @include('pages.products.admin.destroy._delete_button')
                 </div>
             </td>
         </tr>
