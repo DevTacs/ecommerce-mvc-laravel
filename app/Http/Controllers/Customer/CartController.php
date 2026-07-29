@@ -58,7 +58,7 @@ class CartController extends Controller
 
     public function decrement(CartItem $cartItem) 
     {
-        if($cartItem->quantity <= 0) return; 
+        if($cartItem->quantity <= 1) return; 
         
         $cartItem->decrement('quantity');
         

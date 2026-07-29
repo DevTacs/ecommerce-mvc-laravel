@@ -3,7 +3,7 @@
         <tr class="hover:bg-gray-50">
             <td class="px-6 py-4 flex flex-row">
                 <p class="px-4 w-10">{{$loop->iteration}}.</p>
-                <img class="w-15 ml-4" src="{{$item->image_url}}" alt="{{$item->product_name}}" loading="lazy">
+                <img class="w-15 ml-4" src="{{asset($item->image_url)}}" alt="{{$item->product_name}}" loading="lazy">
             </td>
             
             <td class="px-6 py-4 font-medium">
