@@ -20,13 +20,13 @@
 
     <nav class="flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
 
-        <a href="{{ route('products.index') }}" class="text-sm font-medium transition {{ request()->routeIs('admin.products.*')
+        <a href="{{ route('admin.products.index') }}" class="text-sm font-medium transition {{ request()->routeIs('admin.products.*')
                 ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Products
         </a>
 
-        <a href="{{route('orders.index')}}" class="text-sm font-medium transition {{ request()->routeIs('orders.*')
+        <a href="{{route('admin.orders.index')}}" class="text-sm font-medium transition {{ request()->routeIs('admin.orders.*')
                 ? 'text-amber-700 border-b-2 border-amber-700 pb-1'
                 : 'text-gray-700 hover:text-amber-700' }}">
                 Orders
