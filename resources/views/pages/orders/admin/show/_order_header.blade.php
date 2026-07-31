@@ -1,5 +1,5 @@
-<div class="flex flex-row justify-between">
-    <div class="flex flex-col items-start justify-between">
+<div class="flex items-center justify-between">
+    <div>
         <a href="{{ route('admin.orders.index') }}"
             class="text-sm font-medium text-amber-700 hover:text-amber-800">
             ← Back to Orders

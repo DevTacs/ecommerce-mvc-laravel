@@ -17,7 +17,7 @@
             </td>
 
             <td class="px-6 py-4 font-semibold text-gray-900">
-                ₱{{ number_format($item->product_price, 2) }}
+                ₱{{ number_format($item->price, 2) }}
             </td>
         </tr>
     @empty
