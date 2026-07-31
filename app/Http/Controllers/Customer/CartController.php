@@ -91,8 +91,10 @@ class CartController extends Controller
             ->cartItems()
             ->where('product_id', $product->id)
             ->first();
-        
+
+            
         if($cartItem) {
+            if($cartItem->quantity >= $product->stock) return;        
             $cartItem->increment('quantity');
         }else {
             Auth::user()->cartItems()->create([
