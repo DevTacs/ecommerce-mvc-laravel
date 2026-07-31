@@ -43,9 +43,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
+        $orderItems = $order->orderItems()->paginate(10);
+        return view('pages.orders.admin.show', compact('order', 'orderItems'));
     }
 
     /**
