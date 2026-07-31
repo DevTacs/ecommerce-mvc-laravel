@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Customer\CartController;
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')
     ->name('admin.')
     ->group(function() {
     Route::resource('products', AdminProductController::class);
+    Route::resource('orders', AdminOrderController::class);
 });
 
 Route::middleware(['auth'])->group(function() {
