@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\CartItem;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
+use DomainException;
 
 class CartService
 {
@@ -23,8 +24,7 @@ class CartService
 
     public function incrementCartItemQuantity(CartItem $cartItem)
     {
-        if($cartItem->quantity >= $cartItem->product->stock) return;
-
+        if ($cartItem->quantity >= $cartItem->product->stock) throw new DomainException('Maximum stock reached.');
         $this->cartRepository->incrementCartItemQuantity($cartItem);
         $cartTotal = $this->cartRepository->getCartItemsTotalByUserId($cartItem->user_id);
         $cartCount = $this->cartRepository->getCartCountByUserId($cartItem->user_id);        
@@ -39,7 +39,7 @@ class CartService
 
     public function decrementCartItemQuantity(CartItem $cartItem)
     {
-        if($cartItem->quantity <= 1) return; 
+        if($cartItem->quantity <= 1) throw new DomainException('Quantity cannot be less than 1.'); 
 
         $this->cartRepository->decrementCartItemQuantity($cartItem);
         $cartTotal = $this->cartRepository->getCartItemsTotalByUserId($cartItem->user_id);
@@ -56,12 +56,12 @@ class CartService
     public function addToCart(int $userId, int $productId)
     {
         $product = $this->productRepository->getProductById($productId);
-        if($product->stock <= 0 ) return;
+        if($product->stock <= 0 ) throw new DomainException('Product is out of stock.');
 
         $cartItem = $this->cartRepository->getCartItemByUserId($userId, $productId);
 
         if($cartItem) {
-            if($cartItem->quantity >= $product->stock) return;     
+            if($cartItem->quantity >= $product->stock) throw new DomainException('Maximum stock reached.');
                $this->cartRepository->incrementCartItemQuantity($cartItem);
         }else {
             $this->cartRepository->addCartItemToCart($userId, $productId);

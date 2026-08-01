@@ -90,36 +90,60 @@
 
 <script>
 async function increment(itemId) {
-    const response = await fetch(`/cart/${itemId}/increment`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Accept': 'application/json'
-        }
-    });
+    try {
+        const response = await fetch(`/cart/${itemId}/increment`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        });
 
-    const data = await response.json();
-    document.getElementById(`quantity-${itemId}`).textContent = data.quantity
-    document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
-    document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
-    document.getElementById('cartCount').textContent = data.cartCount
+        const data = await response.json();
 
+        if (!response.ok) {
+            alert(data.error || 'An error occurred while incrementing the item quantity.');
+            return;
+        }   
+        
+        document.getElementById(`quantity-${itemId}`).textContent = data.quantity
+        document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
+        document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
+        document.getElementById('cartCount').textContent = data.cartCount
+    }
+    catch (error) {
+        alert('An error occurred while incrementing the item quantity.');
+        console.log(error);
+        return;
+    }
 }
 
 async function decrement(itemId) {
-    const response = await fetch(`/cart/${itemId}/decrement`, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Accept': 'application/json'
-        }
-    })
+    try {
+        const response = await fetch(`/cart/${itemId}/decrement`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        
+        const data = await response.json()
 
-    const data = await response.json()
-    document.getElementById(`quantity-${itemId}`).textContent = data.quantity
-    document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
-    document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
-    document.getElementById('cartCount').textContent = data.cartCount
+        if (!response.ok) {
+            alert(data.error || 'An error occurred while decrementing the item quantity.');
+            return;
+        }
+
+        document.getElementById(`quantity-${itemId}`).textContent = data.quantity
+        document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
+        document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
+        document.getElementById('cartCount').textContent = data.cartCount
+    } catch (error) {
+        alert('An error occurred while decrementing the item quantity.');
+        console.log(error);
+        return;
+    }
 }
 </script>
 </x-layouts.app>
