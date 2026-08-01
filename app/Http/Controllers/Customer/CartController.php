@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Product;
 use App\Services\CartService;
+use DomainException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,23 +22,33 @@ class CartController extends Controller
 
     public function increment(CartItem $cartItem)
     {
-        $results = $this->cartService->incrementCartItemQuantity($cartItem);
-       
-        return response()->json($results);
+        try {
+            $results = $this->cartService->incrementCartItemQuantity($cartItem);
+            return response()->json($results);
+        } catch (DomainException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
 
     public function decrement(CartItem $cartItem) 
     {
-        $results = $this->cartService->decrementCartItemQuantity($cartItem);
-        
-        return response()->json($results);
+        try {
+            $results = $this->cartService->decrementCartItemQuantity($cartItem);
+            return response()->json($results);
+        } catch (DomainException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
     
     public function store(Request $request)
     {
-        $results = $this->cartService->addToCart(Auth::id(), $request->product_id);
-        return response()->json($results);
+        try {
+            $results = $this->cartService->addToCart(Auth::id(), $request->product_id);
+            return response()->json($results);
+        } catch (DomainException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     public function destroy(CartItem $cart)
