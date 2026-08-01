@@ -4,22 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(private OrderService $orderService) {}
+    
     public function index(Request $request)
     {
-        if($request->filled('search')) {
-            $orders = Order::where('order_number', 'like', '%' . $request->search .'%')
-            ->paginate(10)
-            ->withQueryString();
-        }else  { 
-            $orders = Order::paginate(10);
-        }
+        $orders = $this->orderService->getAllOrders($request->query('search'));
 
         return view('pages.orders.admin.index', compact('orders'));
     }
@@ -45,10 +39,11 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $orderItems = $order->orderItems()->paginate(10);
+        $orderItems = $this->orderService->getOrderItems($order);
+        
         return view('pages.orders.admin.show', compact('order', 'orderItems'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
