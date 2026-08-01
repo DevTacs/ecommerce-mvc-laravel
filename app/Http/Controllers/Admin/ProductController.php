@@ -4,23 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(private ProductService $productService) {}
+    
     public function index(Request $request)
     {
-        if($request->filled('search')) {
-            $products = Product::where('name', 'like', '%' . $request->search . '%')
-                ->paginate(10)
-                ->withQueryString();
-        }else {
-            $products = Product::paginate(10);
-        }   
+        $products = $this->productService->getAllProducts($request->query('search'));
         
         return view('pages.products.admin.index', compact('products'));
     }
@@ -45,14 +39,8 @@ class ProductController extends Controller
             'price' => ['required', 'numeric', 'min: 0']
         ]);
 
-        $path = $request->file('image_url')->store('products', 'public');
 
-        $product = Product::create([
-            'image_url' => $path,
-            'name' => $validated['name'],
-            'stock' => $validated['stock'],
-            'price' => $validated['price']
-        ]);
+        $this->productService->createProduct($request->file('image_url'), $validated);
 
         return redirect()->route('admin.products.index')
             ->with(['success' => 'Product created successfully']);
@@ -86,18 +74,7 @@ class ProductController extends Controller
         'price'     => ['required', 'numeric', 'min:0'],
         ]);
 
-        if ($request->hasFile('image_url')) {
-            if ($product->image_url && Storage::disk('public')->exists($product->image_url)) {
-                Storage::disk('public')->delete($product->image_url);
-            }
-
-            $validated['image_url'] = $request
-                ->file('image_url')
-                ->store('products', 'public');
-        }
-
-        $product->update($validated);
-
+        $this->productService->updateProduct($product, $request->file('image_url'), $validated);
         return redirect()
             ->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
@@ -108,9 +85,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        Storage::disk('public')->delete($product->image_url);
-        $product->delete();
-
+        $this->productService->deleteProduct($product);
         return redirect()
             ->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');

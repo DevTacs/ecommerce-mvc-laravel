@@ -21,4 +21,26 @@ class ProductRepository
     {
         return Product::findOrFail($productId);
     }
+
+    public function createProduct($path, array $validated)
+    {
+        Product::create([
+            'image_url' => $path,
+            'name' => $validated['name'],
+            'stock' => $validated['stock'],
+            'price' => $validated['price']
+        ]);
+    }
+
+    public function updateProduct(int $productId, array $validated)
+    {
+        $product = Product::findOrFail($productId);
+        $product->update($validated);
+    }
+
+    public function deleteProduct(int $productId)
+    {
+        $product = Product::findOrFail($productId);
+        $product->delete();
+    }
 }
