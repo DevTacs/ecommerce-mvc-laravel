@@ -4,20 +4,15 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(private ProductService $productService) {}
     public function index(Request $request)
     {
-        if($request->filled('search')) {
-            $products = Product::where('name', 'like', '%' . $request->search . '%')
-                ->paginate(10)
-                ->withQueryString();
-        }else {
-            $products = Product::paginate(10);
-        }
-
+        $products = $this->productService->getAllProducts($request->query('search'));
         return view('pages.products.customer.index', compact('products'));
     }
 
