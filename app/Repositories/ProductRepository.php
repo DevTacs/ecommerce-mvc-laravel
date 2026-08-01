@@ -16,4 +16,9 @@ class ProductRepository
 
         return $query->paginate(10);
     }
+
+    public function getProductById(int $productId)
+    {
+        return Product::findOrFail($productId);
+    }
 }
