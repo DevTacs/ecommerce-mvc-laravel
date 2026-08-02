@@ -102,7 +102,12 @@ async function increment(itemId) {
         const data = await response.json();
 
         if (!response.ok) {
-            alert(data.error || 'An error occurred while incrementing the item quantity.');
+            console.log(data);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message || 'An error occurred while incrementing the item quantity.',
+            });
             return;
         }   
         
@@ -110,9 +115,12 @@ async function increment(itemId) {
         document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
         document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
         document.getElementById('cartCount').textContent = data.cartCount
-    }
-    catch (error) {
-        alert('An error occurred while incrementing the item quantity.');
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while incrementing the item quantity.',
+        });
         console.log(error);
         return;
     }
@@ -131,16 +139,25 @@ async function decrement(itemId) {
         const data = await response.json()
 
         if (!response.ok) {
-            alert(data.error || 'An error occurred while decrementing the item quantity.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message || 'An error occurred while decrementing the item quantity.',
+            });
             return;
         }
 
         document.getElementById(`quantity-${itemId}`).textContent = data.quantity
-        document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`;
-        document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`;
+        document.getElementById(`subTotal-${itemId}`).textContent = `₱${Number(data.subTotal).toFixed(2)}`
+        document.getElementById('cartTotal').textContent = `₱${Number(data.cartTotal).toFixed(2)}`
         document.getElementById('cartCount').textContent = data.cartCount
+
     } catch (error) {
-        alert('An error occurred while decrementing the item quantity.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while decrementing the item quantity.',
+        });
         console.log(error);
         return;
     }
