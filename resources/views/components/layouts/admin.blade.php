@@ -8,7 +8,17 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-gray-50 text-gray-900">
-
+@if (session('swal'))
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Swal.fire({
+        icon: @json(session('swal.icon')),
+        title: @json(session('swal.title')),
+        text: @json(session('swal.text')),
+    });
+});
+</script>
+@endif
 <header class="border-b bg-white shadow-sm">
 <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between">
 

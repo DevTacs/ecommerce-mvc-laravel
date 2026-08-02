@@ -24,9 +24,15 @@ class CartController extends Controller
     {
         try {
             $results = $this->cartService->incrementCartItemQuantity($cartItem);
-            return response()->json($results);
+            return response()->json([...$results, 
+                'swal' => [
+                    'icon' => 'success',
+                    'title' => 'Success',
+                    'text' => 'Item quantity updated successfully.'
+                ]
+            ]);
         } catch (DomainException $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 
@@ -35,9 +41,15 @@ class CartController extends Controller
     {
         try {
             $results = $this->cartService->decrementCartItemQuantity($cartItem);
-            return response()->json($results);
+            return response()->json([...$results, 
+                'swal' => [
+                    'icon' => 'success',
+                    'title' => 'Success',
+                    'text' => 'Item quantity updated successfully.'
+                ]
+            ]);
         } catch (DomainException $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
     
@@ -45,9 +57,16 @@ class CartController extends Controller
     {
         try {
             $results = $this->cartService->addToCart(Auth::id(), $request->product_id);
-            return response()->json($results);
+            return response()->json([
+                ...$results, 
+                'swal' => [
+                    'icon' => 'success',
+                    'title' => 'Success',
+                    'text' => 'Product added to cart successfully.'
+                ]
+            ]);
         } catch (DomainException $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 
