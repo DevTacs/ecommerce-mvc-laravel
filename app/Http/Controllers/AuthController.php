@@ -31,9 +31,17 @@ class AuthController extends Controller
         {
             $request->session()->regenerate();
             if(Auth::user()->role === UserRole::ADMIN) {
-                return redirect()->route('admin.products.index');
+                return redirect()->route('admin.products.index')->with('swal', [
+                    'icon' => 'success',
+                    'title' => 'Success',
+                    'text' => 'Welcome back, Admin!'
+                ]);
             }
-            return redirect()->route('products.index');
+            return redirect()->route('products.index')->with('swal', [
+                'icon' => 'success',
+                'title' => 'Success',
+                'text' => 'Welcome back, '.Auth::user()->name.'!'
+            ]);
         }
         
         return back()->withErrors([
@@ -62,7 +70,11 @@ class AuthController extends Controller
         ]);
         Auth::login($user, true);
         
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('swal', [
+            'icon' => 'success',
+            'title' => 'Success',
+            'text' => 'Account created successfully!'
+        ]);
     }
 
     public function logout(Request $request) 
@@ -71,6 +83,10 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/login')->with('swal', [
+            'icon' => 'success',
+            'title' => 'Success',
+            'text' => 'Logged out successfully!'
+        ]);
     }
 }

@@ -7,6 +7,15 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
+@if (session('swal'))
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    Swal.fire(@json(session('swal')));
+});
+</script>
+@endif
+
 <body class="min-h-screen bg-gray-50 text-gray-900">
 
     <header class="border-b bg-white shadow-sm">

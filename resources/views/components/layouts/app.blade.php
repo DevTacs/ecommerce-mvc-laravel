@@ -8,17 +8,32 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-gray-50 text-gray-900">
+
 @if (session('swal'))
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    Swal.fire({
-        icon: @json(session('swal.icon')),
-        title: @json(session('swal.title')),
-        text: @json(session('swal.text')),
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    Swal.fire(@json(session('swal')));
 });
 </script>
 @endif
+
+<script>
+async function confirmLogout() {
+    const result = await Swal.fire({
+        title: 'Logout?',
+        text: 'Are you sure you want to log out?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Logout',
+        cancelButtonText: 'Cancel'
+    });
+
+    if (result.isConfirmed) {
+        document.getElementById('logout-form').submit();
+    }
+}
+</script>
+
 <header class="border-b bg-white shadow-sm">
 <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between">
 
@@ -63,11 +78,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 </p>
             </div>
 
-            <form action="{{ route('logout') }}" method="POST">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
                 @csrf
 
                 <button
-                    type="submit"
+                    type="button"
+                    onclick="confirmLogout()"   
                     class="rounded-lg bg-amber-700 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-800">
                     Logout
                 </button>
