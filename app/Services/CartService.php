@@ -24,7 +24,8 @@ class CartService
 
     public function incrementCartItemQuantity(CartItem $cartItem)
     {
-        if ($cartItem->quantity >= $cartItem->product->stock) throw new DomainException('Maximum stock reached.');
+        if($cartItem->quantity >= $cartItem->product->stock) throw new DomainException('Cannot increment quantity. Stock limit reached.');
+
         $this->cartRepository->incrementCartItemQuantity($cartItem);
         $cartTotal = $this->cartRepository->getCartItemsTotalByUserId($cartItem->user_id);
         $cartCount = $this->cartRepository->getCartCountByUserId($cartItem->user_id);        
@@ -39,7 +40,7 @@ class CartService
 
     public function decrementCartItemQuantity(CartItem $cartItem)
     {
-        if($cartItem->quantity <= 1) throw new DomainException('Quantity cannot be less than 1.'); 
+        if($cartItem->quantity <= 1) throw new DomainException('Cannot decrement quantity. Minimum quantity reached.'); 
 
         $this->cartRepository->decrementCartItemQuantity($cartItem);
         $cartTotal = $this->cartRepository->getCartItemsTotalByUserId($cartItem->user_id);
@@ -61,7 +62,7 @@ class CartService
         $cartItem = $this->cartRepository->getCartItemByUserId($userId, $productId);
 
         if($cartItem) {
-            if($cartItem->quantity >= $product->stock) throw new DomainException('Maximum stock reached.');
+            if($cartItem->quantity >= $product->stock) throw new DomainException('Cannot add more items. Stock limit reached.');
                $this->cartRepository->incrementCartItemQuantity($cartItem);
         }else {
             $this->cartRepository->addCartItemToCart($userId, $productId);

@@ -43,7 +43,11 @@ class ProductController extends Controller
         $this->productService->createProduct($request->file('image_url'), $validated);
 
         return redirect()->route('admin.products.index')
-            ->with(['success' => 'Product created successfully']);
+            ->with('swal', [
+                'icon' => 'success',
+                'title' => 'Success',
+                'text' => 'Product created successfully.'
+        ]);
     }
 
     /**
@@ -77,7 +81,11 @@ class ProductController extends Controller
         $this->productService->updateProduct($product, $request->file('image_url'), $validated);
         return redirect()
             ->route('admin.products.index')
-            ->with('success', 'Product updated successfully.');
+            ->with('swal', [
+                'icon' => 'success',
+                'title' => 'Success',
+                'text' => 'Product updated successfully.'
+            ]);
     }
 
     /**
@@ -88,6 +96,10 @@ class ProductController extends Controller
         $this->productService->deleteProduct($product);
         return redirect()
             ->route('admin.products.index')
-            ->with('success', 'Product deleted successfully.');
+            ->with('swal', [
+                'icon' => 'success',
+                'title' => 'Success',
+                'text' => 'Product deleted successfully.'
+            ]);
     }
 }

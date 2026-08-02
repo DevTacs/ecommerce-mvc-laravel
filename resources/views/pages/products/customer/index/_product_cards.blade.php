@@ -61,11 +61,14 @@ async function addToCart(product_id) {
         })
         const data = await response.json()
 
-        if (!response.ok) {
-            alert(data.error || 'An error occurred while adding the product to the cart.');
+        if(!response.ok) {
+           Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.message || 'An error occurred while adding the product to the cart.',
+            });
             return;
         }
-
         const badge = document.getElementById('cartCount');
         badge.textContent = data.cartCount;
 
@@ -74,11 +77,15 @@ async function addToCart(product_id) {
         } else {
             badge.classList.add('hidden');
         }
-    } 
-    catch (error) {
-        alert('An error occurred while adding the product to the cart.');
-        console.log(error);
-        return;
+
+        Swal.fire(data.swal);
+    } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message || 'An error occurred while adding the product to the cart.',
+        });
     }
 }    
 </script>
